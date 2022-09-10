@@ -3,10 +3,7 @@ const fs = require('fs');
 // import of model's sauces.
 const Sauce = require('../models/Sauce');
 const { json } = require('express');
-const {validateSauce} = require('../middleware/sauce-validator');
-const { body } = require('express-validator');
 require('dotenv').config();
-const Joi = require('joi');
 
 /*
  * objectif => create sauce with the model of sauce.
@@ -25,7 +22,6 @@ exports.createSauce = (req, res, next) => {
     
 };
 
-console.log(Sauce.name);
 /*
  * objectif => modify sauce.
  */
@@ -88,6 +84,8 @@ exports.getAllSauce = (req, res, next) => {
 
 exports.likeSauce = (req, res, next) => {
   switch (req.body.like) {
+    //likes = 0 to cancel the like or dislike.
+    //uptade the sauce, send message/error
     case 0:
       Sauce.findOne({ _id: req.params.id})
         .then((sauce) =>{
@@ -113,6 +111,8 @@ exports.likeSauce = (req, res, next) => {
         })
         .catch((error) => { res.status(404).json({ error: error });});
         break;
+    //likes = 1 for liked sauce.
+    //uptade the sauce, send message/error    
     case 1:
       Sauce.findOne({ _id: req.params.id})
         .then((sauce) =>{
@@ -132,7 +132,7 @@ exports.likeSauce = (req, res, next) => {
         .catch((error) => { res.status(404).json({ error: error });
         });        
       break;
-    //likes = -1
+    //likes = -1 for disliked sauce.
     //uptade the sauce, send message/error
     case -1:
       Sauce.findOne({ _id: req.params.id})
