@@ -6,7 +6,7 @@ const mongoose = require('mongoose');
 
 // model of sauces.
 const sauceSchema = mongoose.Schema({
-  userId: { type: String, required: true },
+  userId: {type: mongoose.Types.ObjectId, ref: "User"},
   name: { type: String, required: true },
   manufacturer: { type: String, required: true },
   description: { type: String, required: true },

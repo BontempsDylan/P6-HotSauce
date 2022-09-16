@@ -38,6 +38,10 @@ router.post(
     '/',
     auth, 
     customMulter,
+    (req, res, next) => {
+        req.body = JSON.parse(req.body.sauce);
+        next();
+    },
     body('name')
         .isLength({ min: 2, max: 20 })
         .withMessage("Le nom doit contenir min 5 caractères et maximum 20 caractères")
