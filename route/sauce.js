@@ -47,29 +47,25 @@ router.post(
         .withMessage("Le nom doit contenir min 5 caractères et maximum 20 caractères")
         .not().isEmpty()
         .withMessage("Le nom ne doit pas être vide.")
-        .escape()
-        .withMessage("Le nom ne doit pas contenir de caractères dangereux."),
+        .escape(),
     body('manufacturer')
         .isLength({ min: 2, max: 20 })
         .withMessage("Manufacturer doit contenir min 5 caractères et maximum 20 caractères")
         .not().isEmpty()
         .withMessage("Manufacturer ne doit pas être vide.")
-        .escape()
-        .withMessage("Manufacturer ne doit pas contenir de caractères dangereux."),
+        .escape(),
     body('description')
         .isLength({ min: 5, max: 300 })
         .withMessage("La description doit contenir min 5 caractères et maximum 20 caractères")
         .not().isEmpty()
         .withMessage("La description ne doit pas être vide.")
-        .escape()
-        .withMessage("La description ne doit pas contenir de caractères dangereux."),
+        .escape(),
     body('mainPepper')
         .isLength({ min: 2, max: 20 })
         .withMessage("MainPepper doit contenir min 5 caractères et maximum 20 caractères")
         .not().isEmpty()
         .withMessage("MainPepper ne doit pas être vide.")
-        .escape()
-        .withMessage("MainPepper ne doit pas contenir de caractères dangereux."),
+        .escape(),
     finalValidation,
     sauce.createSauce
     );
