@@ -7,9 +7,11 @@ const multer = require('../middleware/multer-config');
 const { body } = require('express-validator');
 const { finalValidation } = require('../middleware/final-validation')
 
+
 const router = express.Router();
 
 const sauce = require('../controllers/sauce');
+
 
 // costum multer to handle errors.
 const customMulter = (req, res, next) => {
@@ -44,13 +46,13 @@ router.post(
     },
     body('name')
         .isLength({ min: 2, max: 20 })
-        .withMessage("Le nom doit contenir min 5 caractères et maximum 20 caractères")
+        .withMessage("Le nom doit contenir min 2 caractères et maximum 20 caractères")
         .not().isEmpty()
         .withMessage("Le nom ne doit pas être vide.")
         .escape(),
     body('manufacturer')
         .isLength({ min: 2, max: 20 })
-        .withMessage("Manufacturer doit contenir min 5 caractères et maximum 20 caractères")
+        .withMessage("Manufacturer doit contenir min 2 caractères et maximum 20 caractères")
         .not().isEmpty()
         .withMessage("Manufacturer ne doit pas être vide.")
         .escape(),
@@ -62,14 +64,44 @@ router.post(
         .escape(),
     body('mainPepper')
         .isLength({ min: 2, max: 20 })
-        .withMessage("MainPepper doit contenir min 5 caractères et maximum 20 caractères")
+        .withMessage("MainPepper doit contenir min 2 caractères et maximum 20 caractères")
         .not().isEmpty()
         .withMessage("MainPepper ne doit pas être vide.")
-        .escape(),
+        .escape(),    
     finalValidation,
     sauce.createSauce
     );
-router.put('/:id', auth, customMulter, sauce.modifySauce);
+router.put(
+    '/:id', 
+    auth, 
+    customMulter,
+    body('name')
+        .isLength({ min: 2, max: 20 })
+        .withMessage("Le nom doit contenir min 2 caractères et maximum 20 caractères")
+        .not().isEmpty()
+        .withMessage("Le nom ne doit pas être vide.")
+        .escape(),
+    body('manufacturer')
+        .isLength({ min: 2, max: 20 })
+        .withMessage("Manufacturer doit contenir min 2 caractères et maximum 20 caractères")
+        .not().isEmpty()
+        .withMessage("Manufacturer ne doit pas être vide.")
+        .escape(),
+    body('description')
+        .isLength({ min: 5, max: 300 })
+        .withMessage("La description doit contenir min 5 caractères et maximum 20 caractères")
+        .not().isEmpty()
+        .withMessage("La description ne doit pas être vide.")
+        .escape(),
+    body('mainPepper')
+        .isLength({ min: 2, max: 20 })
+        .withMessage("MainPepper doit contenir min 2 caractères et maximum 20 caractères")
+        .not().isEmpty()
+        .withMessage("MainPepper ne doit pas être vide.")
+        .escape(),    
+    finalValidation, 
+    sauce.modifySauce
+    );
 router.delete('/:id', auth, sauce.deleteSauce)
 router.get('/:id', auth, sauce.getOneSauce);
 router.get('/', auth, sauce.getAllSauce);

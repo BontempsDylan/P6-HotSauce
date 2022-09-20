@@ -97,6 +97,7 @@ exports.likeSauce = (req, res, next) => {
             })
             .then(() => { res.status(200).json({ message: "Votre avis sur la sauce a été pris en compte." });})
             .catch((error) => { res.status(400).json({ error: error });});
+            return;
           } if (sauce.usersDisliked.find(user => user === req.body.userId)) {
             Sauce.updateOne({ _id: req.params.id }, {
               $inc: { dislikes: -1 },
@@ -105,6 +106,7 @@ exports.likeSauce = (req, res, next) => {
             })
               .then(() => { res.status(201).json({ message: "Votre avis sur la sauce a été pris en compte." }); })
               .catch((error) => { res.status(400).json({ error: error }); });
+              return;
           } else {
             return res.status(404).json({ message: "Vous n'avez pas encore like ou dislike cette sauce." })
           }
